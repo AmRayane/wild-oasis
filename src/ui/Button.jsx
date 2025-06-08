@@ -47,3 +47,11 @@ const variations = {
     }
   `,
 };
+
+const Button = styled.button`
+  border: none;
+  border-radius: var(--border-radius-sm);
+  box-shadow: var(--shadow-sm);
+  ${(props) => props.variations && variations[props.variations]}
+  ${(props) => props.sizes && sizes[props.siezes]}
+`;
