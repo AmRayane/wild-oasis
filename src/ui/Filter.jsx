@@ -1,4 +1,6 @@
 import styled, { css } from "styled-components";
+import { useSearchParams } from "react-router-dom";
+import { useQueryClient } from "@tanstack/react-query";
 
 const StyledFilter = styled.div`
   border: 1px solid var(--color-grey-100);
@@ -33,3 +35,24 @@ const FilterButton = styled.button`
     color: var(--color-brand-50);
   }
 `;
+
+export default function Filter() {
+  const [searchParams, setSearchParams] = useSearchParams();
+  function handleClick(value) {
+    searchParams.set("discount", value);
+    setSearchParams(searchParams);
+  }
+  return (
+    <StyledFilter>
+      <FilterButton onClick={() => handleClick("all-cabins")}>
+        all cabins
+      </FilterButton>
+      <FilterButton onClick={() => handleClick("with-discount")}>
+        with discount
+      </FilterButton>
+      <FilterButton onClick={() => handleClick("without-discount")}>
+        without discount
+      </FilterButton>
+    </StyledFilter>
+  );
+}

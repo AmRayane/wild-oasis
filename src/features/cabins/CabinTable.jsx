@@ -2,6 +2,9 @@ import styled from "styled-components";
 import Spinner from "../../ui/Spinner";
 import CabinRow from "./CabinRow";
 import Row from "../../ui/Row";
+import { useQuery } from "@tanstack/react-query";
+import { getCabins } from "../../services/apiCabins";
+import { useSearchParams } from "react-router-dom";
 const Table = styled.div`
   border: 1px solid var(--color-grey-200);
   font-size: 1.4rem;
@@ -24,19 +27,17 @@ const TableHeader = styled.header`
   padding: 1.6rem 2.4rem;
 `;
 
-import { useQuery } from "@tanstack/react-query";
-import { getCabins } from "../../services/apiCabins";
-
 export default function CabinTable() {
+  const [searchParams] = useSearchParams();
+  const filterValue = searchParams.get("discount") || "all-cabins";
   const {
     data: cabins,
     isPending,
     error,
   } = useQuery({
-    queryKey: ["cabins"],
-    queryFn: getCabins,
+    queryKey: ["cabins", filterValue],
+    queryFn: () => getCabins(filterValue),
   });
-  if (isPending) return <Spinner />;
   return (
     <Table role="table">
       <TableHeader role="row">
@@ -48,7 +49,7 @@ export default function CabinTable() {
         <div></div>
       </TableHeader>
       <Row type="vertical">
-        {cabins.map((cabin) => (
+        {cabins?.map((cabin) => (
           <CabinRow cabin={cabin} />
         ))}
       </Row>
