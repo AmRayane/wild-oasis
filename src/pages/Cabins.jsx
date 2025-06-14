@@ -1,12 +1,9 @@
-import { useEffect } from "react";
 import Heading from "../ui/Heading";
 import Row from "../ui/Row";
-import { getCabins } from "../services/apiCabins";
 import CabinTable from "../features/cabins/CabinTable";
+import AddCabin from "../features/cabins/AddCabin";
+
 function Cabins() {
-  useEffect(function () {
-    getCabins().then((date) => console.log(date));
-  }, []);
   return (
     <Row type="vertical">
       <Row type="horizontal">
@@ -14,6 +11,7 @@ function Cabins() {
         <p>Filter / Sort</p>
       </Row>
       <CabinTable />
+      <AddCabin />
     </Row>
   );
 }
