@@ -30,6 +30,7 @@ const TableHeader = styled.header`
 export default function CabinTable() {
   const [searchParams] = useSearchParams();
   const filterValue = searchParams.get("discount") || "all-cabins";
+
   const {
     data: cabins,
     isPending,

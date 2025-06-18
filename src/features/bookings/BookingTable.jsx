@@ -1,9 +1,15 @@
 import BookingRow from "./BookingRow";
 import Table from "../../ui/Table";
 import Menus from "../../ui/Menus";
-
+import { useBooking } from "./useBookings";
+import Pagination from "../../ui/Pagination";
+import { useSearchParams } from "react-router-dom";
 function BookingTable() {
-  const bookings = [];
+  const [searchParams] = useSearchParams();
+  const page = Number(searchParams.get("pages")) || 1;
+  const { bookings, count } = useBooking(page);
+  console.log(bookings);
+  if (!bookings?.length) return <div>No bookings found</div>;
 
   return (
     <Menus>
@@ -24,6 +30,9 @@ function BookingTable() {
           )}
         />
       </Table>
+      <Table.Footer>
+        <Pagination items={count} />
+      </Table.Footer>
     </Menus>
   );
 }

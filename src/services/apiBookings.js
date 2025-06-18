@@ -1,5 +1,34 @@
+import { maxTime } from "date-fns/constants";
 import { getToday } from "../utils/helpers";
 import supabase from "./supabase";
+
+const max_items = 5;
+
+export async function getBookings(status, page) {
+  const from = (page - 1) * max_items;
+  const to = from + max_items - 1;
+
+  let query = supabase
+    .from("bookings")
+    .select(
+      "id, created_at, startDate, endDate, numNights, numGuests, totalPrice,status,  cabins(name), guests(fullName, email)",
+      { count: "exact" } // important pour avoir le total
+    )
+    .range(from, to);
+
+  if (status !== null && status !== "all") {
+    query = query.eq("status", status);
+  }
+
+  const { data, error, count } = await query;
+
+  if (error) {
+    console.error(error);
+    throw new Error("Bookings could not be loaded");
+  }
+
+  return { data, count };
+}
 
 export async function getBooking(id) {
   const { data, error } = await supabase

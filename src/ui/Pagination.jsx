@@ -1,3 +1,5 @@
+import { HiArrowLeft, HiArrowRight } from "react-icons/hi2";
+import { useSearchParams } from "react-router-dom";
 import styled from "styled-components";
 
 const StyledPagination = styled.div`
@@ -55,3 +57,47 @@ const PaginationButton = styled.button`
     color: var(--color-brand-50);
   }
 `;
+
+const max_items = 5;
+export default function Pagination({ items }) {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const currentPage = !searchParams.get("pages")
+    ? 1
+    : Number(searchParams.get("pages"));
+  const max_pages = Math.ceil(items / max_items);
+  function nextPage() {
+    const next = currentPage === max_pages ? max_pages : currentPage + 1;
+    searchParams.set("pages", next);
+    setSearchParams(searchParams);
+  }
+
+  function previousPage() {
+    const prev = currentPage === 1 ? 1 : currentPage - 1;
+    searchParams.set("pages", prev);
+    setSearchParams(searchParams);
+  }
+  return (
+    <StyledPagination>
+      <P>
+        from {(currentPage - 1) * max_items} to{" "}
+        {currentPage === max_pages
+          ? items
+          : max_items * (currentPage - 1) + max_items}{" "}
+        of {items}
+      </P>
+      <Buttons>
+        <PaginationButton disabled={currentPage === 1} onClick={previousPage}>
+          <HiArrowLeft />
+          <P>Prev</P>
+        </PaginationButton>
+        <PaginationButton
+          onClick={nextPage}
+          disabled={currentPage === max_pages}
+        >
+          <P>Next</P>
+          <HiArrowRight />
+        </PaginationButton>
+      </Buttons>
+    </StyledPagination>
+  );
+}
