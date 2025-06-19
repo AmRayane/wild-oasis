@@ -10,7 +10,9 @@ import ButtonText from "../../ui/ButtonText";
 import Spinner from "../../ui/Spinner";
 import { useMoveBack } from "../../hooks/useMoveBack";
 import { useParams } from "react-router-dom";
-import { useBooking } from "./useBookings";
+import { useBooking } from "./useBooking";
+import { useQuery } from "@tanstack/react-query";
+import { getBooking } from "../../services/apiBookings";
 
 const HeadingGroup = styled.div`
   display: flex;
@@ -20,7 +22,15 @@ const HeadingGroup = styled.div`
 
 function BookingDetail() {
   const { bookingId } = useParams();
-  const { booking, error, isLoading } = useBooking();
+  const {
+    isPending: isLoading,
+    data: booking,
+    error,
+  } = useQuery({
+    queryKey: ["booking", bookingId],
+    queryFn: () => getBooking(bookingId),
+    retry: false,
+  });
   const status = "checked-in";
   const moveBack = useMoveBack();
 
