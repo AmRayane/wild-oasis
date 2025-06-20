@@ -19,7 +19,7 @@ export default function Logout() {
           <SpinnerMini />
         ) : (
           <>
-            Log out <CiLogout />
+            <CiLogout />
           </>
         )}
       </Span>

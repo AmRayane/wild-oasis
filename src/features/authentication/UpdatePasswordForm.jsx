@@ -10,7 +10,7 @@ function UpdatePasswordForm() {
   const { register, handleSubmit, formState, getValues, reset } = useForm();
   const { errors } = formState;
 
-  const { updateUser, isUpdating } = useUpdateUser();
+  const { updateUser, isUpdating } = {};
 
   function onSubmit({ password }) {
     updateUser({ password }, { onSuccess: reset });
@@ -54,10 +54,17 @@ function UpdatePasswordForm() {
         />
       </FormRow>
       <FormRow>
-        <Button onClick={reset} type="reset" variation="secondary">
+        <Button
+          size="medium"
+          onClick={reset}
+          type="reset"
+          variation="secondary"
+        >
           Cancel
         </Button>
-        <Button disabled={isUpdating}>Update password</Button>
+        <Button variation="primary" size="medium" disabled={isUpdating}>
+          Update password
+        </Button>
       </FormRow>
     </Form>
   );

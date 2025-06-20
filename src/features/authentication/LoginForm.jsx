@@ -7,8 +7,8 @@ import { useAuth } from "./useAuth";
 import Spinner from "../../ui/Spinner";
 
 function LoginForm() {
-  const [email, setEmail] = useState("user@test.com");
-  const [password, setPassword] = useState("123456789");
+  const [email, setEmail] = useState("user@test145.com");
+  const [password, setPassword] = useState("12345678");
   const { login, isLoading } = useAuth();
 
   function handleSubmit(e) {

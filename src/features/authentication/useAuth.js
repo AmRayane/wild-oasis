@@ -8,11 +8,9 @@ export function useAuth() {
   const { mutate: login, isPending: isLoading } = useMutation({
     mutationFn: ({ email, password }) => loginApi({ email, password }),
     onError: (err) => {
-      console.log("ERROR", err);
       toast.error("Provided email or password are incorrect");
     },
-    onSuccess: (data) => {
-      console.log(data);
+    onSuccess: () => {
       navigate("/dashboard");
       toast.success("logged in successfully");
     },
