@@ -7,6 +7,8 @@ import {
   HiOutlineChartBar,
 } from "react-icons/hi";
 import { useRecentBookings } from "./useRecentBookings";
+import { useRecentStays } from "./useRecentStays";
+import { formatCurrency } from "../../utils/helpers";
 
 const StyledDashboardLayout = styled.div`
   display: grid;
@@ -18,33 +20,41 @@ const StyledDashboardLayout = styled.div`
 
 export default function DashboardLayout() {
   const { lastBookings } = useRecentBookings();
+  const { confirmedStays, numDays } = useRecentStays();
   const numBookings = lastBookings?.length;
+  const checkins = confirmedStays?.length;
+  const sales = lastBookings?.reduce((acc, cur) => acc + cur.totalPrice, 0);
+  const occupation =
+    confirmedStays?.reduce((acc, cur) => acc + cur.numNights, 0) /
+    (numDays * lastBookings?.length);
   return (
     <StyledDashboardLayout>
-      <Stat
-        icon={<HiOutlineBriefcase />}
-        value={numBookings}
-        title="Bookings"
-        color="blue"
-      />
-      <Stat
-        icon={<HiOutlineBanknotes />}
-        value={0}
-        title="sales"
-        color="green"
-      />
-      <Stat
-        icon={<HiOutlineCalendar />}
-        value={0}
-        title="check ins"
-        color="indigo"
-      />
-      <Stat
-        icon={<HiOutlineChartBar />}
-        value=""
-        title="occupation rate"
-        color="yellow"
-      />
+      <>
+        <Stat
+          icon={<HiOutlineBriefcase />}
+          value={numBookings}
+          title="Bookings"
+          color="blue"
+        />
+        <Stat
+          icon={<HiOutlineBanknotes />}
+          value={formatCurrency(sales)}
+          title="sales"
+          color="green"
+        />
+        <Stat
+          icon={<HiOutlineCalendar />}
+          value={checkins}
+          title="check ins"
+          color="indigo"
+        />
+        <Stat
+          icon={<HiOutlineChartBar />}
+          value={`${Math.round(occupation * 100)}%`}
+          title="occupation rate"
+          color="yellow"
+        />
+      </>
     </StyledDashboardLayout>
   );
 }
