@@ -51,7 +51,7 @@ export default function CabinTable() {
       </TableHeader>
       <Row type="vertical">
         {cabins?.map((cabin) => (
-          <CabinRow cabin={cabin} />
+          <CabinRow key={cabin.id} cabin={cabin} />
         ))}
       </Row>
     </Table>

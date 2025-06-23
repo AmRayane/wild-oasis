@@ -9,7 +9,9 @@ import {
 import { useRecentBookings } from "./useRecentBookings";
 import { useRecentStays } from "./useRecentStays";
 import { formatCurrency } from "../../utils/helpers";
-
+import TodayActivity from "../check-in-out/TodayActivity";
+import DurationChart from "./DurationChart";
+import SalesChart from "./SalesChart";
 const StyledDashboardLayout = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
@@ -55,6 +57,9 @@ export default function DashboardLayout() {
           color="yellow"
         />
       </>
+      <TodayActivity />
+      <DurationChart confirmedStays={confirmedStays} />
+      <SalesChart bookings={lastBookings} numDays={numDays} />
     </StyledDashboardLayout>
   );
 }

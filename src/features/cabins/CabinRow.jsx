@@ -78,13 +78,13 @@ export default function CabinRow({ cabin }) {
 
         <div>
           <button disabled={isCreating} onClick={handleDuplicateCabin}>
-            <HiDuplicate />
+            <HiDuplicate size={17} />
           </button>
           <button onClick={() => setShowForm((showForm) => !showForm)}>
-            <HiPencil />
+            <HiPencil size={17} />
           </button>
           <button disabled={isDeleting} onClick={() => deleteCabin(cabinId)}>
-            <HiTrash />
+            <HiTrash size={17} />
           </button>
         </div>
       </TableRow>
